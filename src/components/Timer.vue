@@ -4,22 +4,53 @@
       <div class="time">
         {{ formatTime }}
       </div>
-      <button v-on:click="start_timer" v-if="!timerOn">Start</button>
-      <button v-on:click="stop_timer" v-if="timerOn">Stop</button>
+      <div class="button">
+        <button v-on:click="start_timer" v-if="!timerOn">Start</button>
+        <button v-on:click="stop_timer" v-if="timerOn">Stop</button>
+      </div>
     </div>
   </div>
+  <table class="table" border="1">
+    <thead>
+      <tr>
+        <th scope="col">残り時間</th>
+        <th scope="col">ジュエル</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(item, index) in items" :key="index">
+        <td>{{ item.time }}</td>
+        <td>{{ item.jewel }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
-
 export default {
   name: 'timer',
   data() {
     return {
-      min: 0,
-      sec: 10,
+      min: 6,
+      sec: 0,
       timerOn: false,
       timerObj: null,
+      items: [
+        { time: "５：３０", jewel: "ジュエルラッシュ" },
+        { time: "４：５５", jewel: "ジュエルラッシュ" },
+        { time: "４：３０", jewel: "ボーナスジュエル (内周)" },
+        { time: "４：２０", jewel: "ジュエルラッシュ" },
+        { time: "３：４５", jewel: "ジュエルラッシュ" },
+        { time: "３：３０", jewel: "ボーナスジュエル (外周)" },
+        { time: "３：１０", jewel: "ジュエルラッシュ" },
+        { time: "２：３５", jewel: "ジュエルラッシュ" },
+        { time: "２：３０", jewel: "ボーナスジュエル (内周)" },
+        { time: "２：００", jewel: "ジュエルラッシュ" },
+        { time: "１：３０", jewel: "ボーナスジュエル (外周)" },
+        { time: "１：２５", jewel: "ジュエルラッシュ" },
+        { time: "０：５０", jewel: "ジュエルラッシュ" },
+        { time: "０：３０", jewel: "ボーナスジュエル (内周)" },
+      ]
     }
   },
   methods: {
@@ -70,9 +101,12 @@ export default {
 #timer {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 .time {
-  font-size: 100px;
+  display: inline;
+  font-size: 30px;
+}
+.button {
+  display: inline;
 }
 </style>
