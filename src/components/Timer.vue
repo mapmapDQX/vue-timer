@@ -19,8 +19,8 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in items" :key="index">
-        <td>{{ item.time }}</td>
-        <td>{{ item.jewel }}</td>
+        <td :style="{'background-color': getBGColor(item)}">{{ item.time }}</td>
+        <td :style="{'background-color': getBGColor(item)}">{{ item.jewel }}</td>
       </tr>
     </tbody>
   </table>
@@ -36,24 +36,25 @@ export default {
       timerOn: false,
       timerObj: null,
       items: [
-        { time: "５：３０", jewel: "ジュエルラッシュ" },
-        { time: "４：５５", jewel: "ジュエルラッシュ" },
-        { time: "４：３０", jewel: "ボーナスジュエル (内周)" },
-        { time: "４：２０", jewel: "ジュエルラッシュ" },
-        { time: "３：４５", jewel: "ジュエルラッシュ" },
-        { time: "３：３０", jewel: "ボーナスジュエル (外周)" },
-        { time: "３：１０", jewel: "ジュエルラッシュ" },
-        { time: "２：３５", jewel: "ジュエルラッシュ" },
-        { time: "２：３０", jewel: "ボーナスジュエル (内周)" },
-        { time: "２：００", jewel: "ジュエルラッシュ" },
-        { time: "１：３０", jewel: "ボーナスジュエル (外周)" },
-        { time: "１：２５", jewel: "ジュエルラッシュ" },
-        { time: "０：５０", jewel: "ジュエルラッシュ" },
-        { time: "０：３０", jewel: "ボーナスジュエル (内周)" },
+        { time: "５：３０", jewel: "ジュエルラッシュ", min: 5, sec: 30, ontime: false },
+        { time: "４：５５", jewel: "ジュエルラッシュ", min: 4, sec: 55, ontime: false },
+        { time: "４：３０", jewel: "ボーナスジュエル (内周)", min: 4, sec: 30, ontime: false },
+        { time: "４：２０", jewel: "ジュエルラッシュ", min: 4, sec: 20, ontime: false },
+        { time: "３：４５", jewel: "ジュエルラッシュ", min: 3, sec: 45, ontime: false },
+        { time: "３：３０", jewel: "ボーナスジュエル (外周)", min: 3, sec: 30, ontime: false },
+        { time: "３：１０", jewel: "ジュエルラッシュ", min: 3, sec: 10, ontime: false },
+        { time: "２：３５", jewel: "ジュエルラッシュ", min: 2, sec: 35, ontime: false },
+        { time: "２：３０", jewel: "ボーナスジュエル (内周)", min: 2, sec: 30, ontime: false },
+        { time: "２：００", jewel: "ジュエルラッシュ", min: 2, sec: 0, ontime: false },
+        { time: "１：３０", jewel: "ボーナスジュエル (外周)", min: 1, sec: 30, ontime: false },
+        { time: "１：２５", jewel: "ジュエルラッシュ", min: 1, sec: 25, ontime: false },
+        { time: "０：５０", jewel: "ジュエルラッシュ", min: 0, sec: 50, ontime: false },
+        { time: "０：３０", jewel: "ボーナスジュエル (内周)", min: 0, sec: 30, ontime: false }
       ]
     }
   },
   methods: {
+    // タイマーカウント関数(1秒ごとに呼び出される)
     timer_count: function() {
       if (this.sec <= 0 && this.min >= 1) {
         this.min --;
@@ -63,8 +64,17 @@ export default {
         this.timerOn = false
         this.min = 6
         this.sec = 0
+        for (let i = 0; i < this.items.length; i++) {
+          this.items[i].ontime = false
+        }
       } else {
         this.sec --;
+      }
+
+      for (let i = 0; i < this.items.length; i++) {
+        if (this.min == this.items[i].min && this.sec == this.items[i].sec) {
+          this.items[i].ontime = true
+        }
       }
     },
 
@@ -77,6 +87,10 @@ export default {
     stop_timer: function() {
       clearInterval(this.timerObj);
       this.timerOn = false; //timerがOFFであることを状態として保持
+    },
+
+    getBGColor(item) {
+      return item.ontime ? '#606000' : 'black'
     }
   },
   computed: {
