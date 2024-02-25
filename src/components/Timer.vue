@@ -27,8 +27,8 @@ export default {
   name: 'timer',
   data() {
     return {
-      min: 6,
-      sec: 0,
+      min: 5,
+      sec: 30,
       timerOn: false,
       timerObj: null,
       items: [
@@ -52,25 +52,26 @@ export default {
   methods: {
     // タイマーカウント関数(1秒ごとに呼び出される)
     timer_count: function() {
+      // 残り時間が一致するテーブル行の色を変える
+      for (let i = 0; i < this.items.length; i++) {
+        if (this.min == this.items[i].min && this.sec == this.items[i].sec) {
+          this.items[i].ontime = true
+        }
+      }
+      // タイマーカウント処理
       if (this.sec <= 0 && this.min >= 1) {
         this.min --;
         this.sec = 59;
       } else if(this.sec <= 0 && this.min <= 0) {
         clearInterval(this.timerObj)
         this.timerOn = false
-        this.min = 6
-        this.sec = 0
+        this.min = 5
+        this.sec = 30
         for (let i = 0; i < this.items.length; i++) {
           this.items[i].ontime = false
         }
       } else {
         this.sec --;
-      }
-
-      for (let i = 0; i < this.items.length; i++) {
-        if (this.min == this.items[i].min && this.sec == this.items[i].sec) {
-          this.items[i].ontime = true
-        }
       }
     },
 
