@@ -1,13 +1,9 @@
 <template>
   <div id="timer">
     <div class="timer">
-      <div class="time">
-        {{ formatTime }}
-      </div>
-      <div class="button">
-        <button v-on:click="start_timer" v-if="!timerOn">Start</button>
-        <button v-on:click="stop_timer" v-if="timerOn">Stop</button>
-      </div>
+      <div class="time">{{ formatTime }}</div>
+      <div class="button" @click="start_timer" v-if="!timerOn">Start</div>
+      <div class="button" @click="stop_timer" v-if="timerOn">Stopt</div>
     </div>
   </div>
   <table class="table" border="1">
@@ -118,9 +114,17 @@ export default {
 }
 .time {
   display: inline;
-  font-size: 30px;
+  font-size: 40px;
 }
 .button {
-  display: inline;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  display: inline-block;
+  border: 2px solid rgb(255,194,64);
+  background: linear-gradient(to bottom, rgb(255,244,92), rgb(240,229,86));
+  font-size: 30px;
+  color: black;
 }
 </style>
