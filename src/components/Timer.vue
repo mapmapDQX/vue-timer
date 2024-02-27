@@ -6,7 +6,7 @@
       <div class="button" @click="stop_timer" v-if="timerOn">Stopt</div>
     </div>
   </div>
-  <table class="table" border="1">
+  <table class="table" style="font-size: 24px" border="1">
     <thead>
       <tr>
         <th scope="col">残り時間</th>
