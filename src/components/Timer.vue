@@ -27,25 +27,24 @@ export default {
   name: 'timer',
   data() {
     return {
-      min: 5,
-      sec: 30,
+      sec: 330,
       timerOn: false,
       timerObj: null,
       items: [
-        { time: "５：３０", jewel: "ジュエルラッシュ", min: 5, sec: 30, ontime: false },
-        { time: "４：５５", jewel: "ジュエルラッシュ", min: 4, sec: 55, ontime: false },
-        { time: "４：３０", jewel: "ボーナスジュエル (内周)", min: 4, sec: 30, ontime: false },
-        { time: "４：２０", jewel: "ジュエルラッシュ", min: 4, sec: 20, ontime: false },
-        { time: "３：４５", jewel: "ジュエルラッシュ", min: 3, sec: 45, ontime: false },
-        { time: "３：３０", jewel: "ボーナスジュエル (外周)", min: 3, sec: 30, ontime: false },
-        { time: "３：１０", jewel: "ジュエルラッシュ", min: 3, sec: 10, ontime: false },
-        { time: "２：３５", jewel: "ジュエルラッシュ", min: 2, sec: 35, ontime: false },
-        { time: "２：３０", jewel: "ボーナスジュエル (内周)", min: 2, sec: 30, ontime: false },
-        { time: "２：００", jewel: "ジュエルラッシュ", min: 2, sec: 0, ontime: false },
-        { time: "１：３０", jewel: "ボーナスジュエル (外周)", min: 1, sec: 30, ontime: false },
-        { time: "１：２５", jewel: "ジュエルラッシュ", min: 1, sec: 25, ontime: false },
-        { time: "０：５０", jewel: "ジュエルラッシュ", min: 0, sec: 50, ontime: false },
-        { time: "０：３０", jewel: "ボーナスジュエル (内周)", min: 0, sec: 30, ontime: false }
+        { time: "５：３０", jewel: "スタート", sec: 325, ontime: false },
+        { time: "４：５５", jewel: "ジュエルラッシュ", sec: 295, ontime: false },
+        { time: "４：３０", jewel: "ボーナスジュエル (内周)", sec: 270, ontime: false },
+        { time: "４：２０", jewel: "ジュエルラッシュ", sec: 260, ontime: false },
+        { time: "３：４５", jewel: "ジュエルラッシュ", sec: 225, ontime: false },
+        { time: "３：３０", jewel: "ボーナスジュエル (外周)", sec: 210, ontime: false },
+        { time: "３：１０", jewel: "ジュエルラッシュ", sec: 190, ontime: false },
+        { time: "２：３５", jewel: "ジュエルラッシュ", sec: 155, ontime: false },
+        { time: "２：３０", jewel: "ボーナスジュエル (内周)", sec: 150, ontime: false },
+        { time: "２：００", jewel: "ジュエルラッシュ", sec: 120, ontime: false },
+        { time: "１：３０", jewel: "ボーナスジュエル (外周)", sec: 90, ontime: false },
+        { time: "１：２５", jewel: "ジュエルラッシュ", sec: 85, ontime: false },
+        { time: "０：５０", jewel: "ジュエルラッシュ", sec: 50, ontime: false },
+        { time: "０：３０", jewel: "ボーナスジュエル (内周)", sec: 30, ontime: false }
       ]
     }
   },
@@ -54,19 +53,15 @@ export default {
     timer_count: function() {
       // 残り時間が一致するテーブル行の色を変える
       for (let i = 0; i < this.items.length; i++) {
-        if (this.min == this.items[i].min && this.sec == this.items[i].sec) {
+        if (this.sec == this.items[i].sec + 5) {
           this.items[i].ontime = true
         }
       }
       // タイマーカウント処理
-      if (this.sec <= 0 && this.min >= 1) {
-        this.min --;
-        this.sec = 59;
-      } else if(this.sec <= 0 && this.min <= 0) {
+      if(this.sec <= 0) {
         clearInterval(this.timerObj)
         this.timerOn = false
-        this.min = 5
-        this.sec = 30
+        this.sec = 330
         for (let i = 0; i < this.items.length; i++) {
           this.items[i].ontime = false
         }
@@ -93,8 +88,8 @@ export default {
   computed: {
     formatTime: function() {
       let timeStrings = [
-        this.min.toString(),
-        this.sec.toString()
+        Math.floor(this.sec / 60).toString(),
+        (this.sec % 60).toString()
       ].map(function(str) {
         if (str.length < 2) {
           return "0" + str
